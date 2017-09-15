@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/Content/Calculator.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var prevInput = "0";
+        var prevOperator = null;
+        var currentOperator = null;
+
+        $("button").click(function () {
+            var btnVal = null;
+            var btnId = $(this).attr('id');
+            var inputtxt = $(".numinput").text();
+
+            if ((btnId == "add" || btnId == "subtract" || btnId == "multiply" || btnId == "divide")) {
+                if (currentOperator != null) {
+                    switch (currentOperator) {
+                        case "+":
+                            prevInput = (parseFloat(prevInput) + parseFloat(inputtxt)).toString();
+                            break;
+                        case "-":
+                            prevInput = (parseFloat(prevInput) - parseFloat(inputtxt)).toString();
+                            break;
+                        case "*":
+                            prevInput = (parseFloat(prevInput) * parseFloat(inputtxt)).toString();
+                            break;
+                        case "/":
+                            prevInput = (parseFloat(prevInput) / parseFloat(inputtxt)).toString();
+                            break;
+                        case "=":
+                            prevInput = inputtxt;
+                            break;
+                    }
+                }
+                else {
+                    prevInput = inputtxt;
+                }
+
+            }
+
+            switch (btnId) {
+                case "b1":
+                    btnVal = 1;
+                    break;
+                case "b2":
+                    btnVal = 2;
+                    break;
+                case "b3":
+                    btnVal = 3;
+                    break;
+                case "b4":
+                    btnVal = 4;
+                    break;
+                case "b5":
+                    btnVal = 5;
+                    break;
+                case "b6":
+                    btnVal = 6;
+                    break;
+                case "b7":
+                    btnVal = 7;
+                    break;
+                case "b8":
+                    btnVal = 8;
+                    break;
+                case "b9":
+                    btnVal = 9;
+                    break;
+                case "b0":
+                    btnVal = 0;
+                    break;
+                case "add":
+                    btnVal = null;
+                    currentOperator = "+";
+                    $(".numinput").text("0");
+                    break;
+                case "subtract":
+                    btnVal = null;
+                    currentOperator = "-";
+                    $(".numinput").text("0");
+                    break;
+                case "multiply":
+                    btnVal = null;
+                    currentOperator = "*";
+                    $(".numinput").text("0");
+                    break;
+                case "divide":
+                    btnVal = null;
+                    currentOperator = "/";
+                    $(".numinput").text("0");
+                    break;
+                case "bdot":
+                    if (inputtxt.indexOf(".") == -1)
+                    {
+                        $(".numinput").text(inputtxt + ".");
+                    }
+                    break;
+                case "enter":
+                    switch (currentOperator)
+                    {
+                        case "+":
+                            $(".numinput").text(parseFloat(prevInput) + parseFloat(inputtxt));
+                            break;
+                        case "-":
+                            $(".numinput").text(parseFloat(prevInput) - parseFloat(inputtxt));
+                            break;
+                        case "*":
+                            $(".numinput").text(parseFloat(prevInput) * parseFloat(inputtxt));
+                            break;
+                        case "/":
+                            $(".numinput").text(parseFloat(prevInput) / parseFloat(inputtxt));
+                            break;
+                    }
+
+                    btnVal = null;
+                    prevInput = "0";
+                    currentOperator = "=";
+                    break;
+                case "bclr":
+                    btnVal = null;
+                    prevInput = "0";
+                    currentOperator = null;
+                    $(".numinput").text("0");
+                    break;
+            }
+
+            if (inputtxt == "0" && btnVal != null)
+            {
+                $(".numinput").text(btnVal);
+            }
+            else if (inputtxt != "0" && btnVal != null && currentOperator != "=")
+            {
+                $(".numinput").text(inputtxt + btnVal);
+            }
+            else if (inputtxt != "0" && btnVal != null && currentOperator == "=")
+            {
+                currentOperator = null;
+                $(".numinput").text(btnVal);
+            }
+            
+        });
+    });
+</script>
+
+<html>
+<head>
+</head>
+<body>
+    <div class="calculator">
+        <div id="total" class="numinput">0</div>
+        <div class="buttongrid">
+            <button id="b7">7</button>
+            <button id="b8">8</button>
+            <button id="b9">9</button>
+            <button id="add">+</button>
+            <button id="b4">4</button>
+            <button id="b5">5</button>
+            <button id="b6">6</button>
+            <button id="subtract">-</button>
+            <button id="b1">1</button>
+            <button id="b2">2</button>
+            <button id="b3">3</button>
+            <button id="multiply">x</button>
+            <button id="bdot">.</button>
+            <button id="b0">0</button>
+            <button id="bclr">C</button>
+            <button id="divide">&divide;</button>
+        </div>
+        <button id="enter">=</button>
+    </div>
+</body>
+</html>
